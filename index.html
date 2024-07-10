@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upwork Filters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upwork Filters</h1>
+    <form id="filters-form">
+        <!-- Job Type Filter -->
+        <div class="filter-group">
+            <label for="job-type">Job Type</label>
+            <select id="job-type" name="job-type">
+                <option value="">Select Job Type</option>
+                <option value="hourly">Hourly</option>
+                <option value="fixed">Fixed Price</option>
+            </select>
+        </div>
+
+        <!-- Experience Level Filter -->
+        <div class="filter-group">
+            <label>Experience Level</label>
+            <input type="radio" id="entry" name="experience-level" value="entry">
+            <label for="entry">Entry Level</label>
+            <input type="radio" id="intermediate" name="experience-level" value="intermediate">
+            <label for="intermediate">Intermediate</label>
+            <input type="radio" id="expert" name="experience-level" value="expert">
+            <label for="expert">Expert</label>
+        </div>
+
+        <!-- Client History Filter -->
+        <div class="filter-group">
+            <label>Client History</label>
+            <input type="checkbox" id="no-hires" name="client-history" value="no-hires">
+            <label for="no-hires">No hires</label>
+            <input type="checkbox" id="one-hire" name="client-history" value="one-hire">
+            <label for="one-hire">1-9 hires</label>
+            <input type="checkbox" id="ten-hires" name="client-history" value="ten-hires">
+            <label for="ten-hires">10+ hires</label>
+        </div>
+
+        <!-- Location Filter -->
+        <div class="filter-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" placeholder="Enter location">
+        </div>
+
+        <button type="button" onclick="generateURL()">Generate URL</button>
+    </form>
+
+    <p id="generated-url"></p>
+
+    <script>
+        function generateURL() {
+            const form = document.getElementById('filters-form');
+            const formData = new FormData(form);
+            let queryParams = new URLSearchParams();
+
+            for (const [key, value] of formData.entries()) {
+                if (value) {
+                    queryParams.append(key, value);
+                }
+            }
+
+            const url = `https://www.upwork.com/jobs/?${queryParams.toString()}`;
+            console.log(url);
+            document.getElementById('generated-url').textContent = url;
+        }
+    </script>
+</body>
+</html>
